@@ -1,0 +1,16 @@
+netsciopt/
+│
+├── classes/
+│   ├── __init__.py
+│   └── graph.py                     # Directed graph class
+│
+├── algorithms/
+│   ├── __init__.py
+│   ├── search.py                    # DFS, BFS
+│   ├── dijkstra.py                  # Dijkstra shortest paths
+│   ├── bellman_ford.py              # Bellman–Ford shortest paths
+│   ├── a_star.py                    # A* shortest paths
+│   ├── alt.py                       # ALT (A*, landmarks, triangle inequality)
+│   └── contraction_hierarchies.py   # Contraction Hierarchies
+│
+└── __init__.py
