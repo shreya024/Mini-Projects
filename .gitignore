@@ -1,1 +1,6 @@
 *.graphml
+*.exe
+*.ilk
+*.obj
+*.pdb
+*.vscode
