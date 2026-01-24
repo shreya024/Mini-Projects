@@ -179,7 +179,7 @@ if __name__ == "__main__":
     #                     title="DFS_Traversal")
 
     # Download OSMnx network and perform BFS
-    # G = download_osmnx_network()
+    #G = download_osmnx_network()
     # G = ox.load_graphml("./data/traversal/blr_16000.graphml")
     # graph = nx2no(G)
     # start_time = time.time()
@@ -191,7 +191,7 @@ if __name__ == "__main__":
     #                graph.nodes]
     # node_sizes = [0 if is_reachable[n] else 20 for n in graph.nodes]
 
-    # # Visualize the graph using osmnx functions
+    # # # Visualize the graph using osmnx functions
     # G = nx.MultiDiGraph(no2nx(graph))
     # G.graph["crs"] = pyproj.CRS("EPSG:4326")
     # fig, ax = ox.plot_graph(G, node_color=node_colors,
@@ -203,15 +203,41 @@ if __name__ == "__main__":
     #                         filepath="BFS_Traversal_OSMnx.png")
 
     #G = download_osmnx_network()
-    G = ox.load_graphml("./data/shortest_paths/blr_1000.graphml")
+    G = ox.load_graphml("./data/shortest_paths/blr_16000.graphml")
     graph = nx2no(G)
-    dist=no.reverse_dijkstra(graph,list(graph.nodes)[0])
-    #dist=no.reverse_dijkstra(graph,6)
-    avgSum=0
-    count=0
-    for d in dist:
-        if dist[d]!=float('inf'):
-            avgSum+=dist[d]
-            count+=1
-    print(count,avgSum/count)
+    # dist=no.reverse_dijkstra(graph,list(graph.nodes)[0])
+    # #dist=no.reverse_dijkstra(graph,6)
+    # avgSum=0
+    # count=0
+    # for d in dist:
+    #     if dist[d]!=float('inf'):
+    #         avgSum+=dist[d]
+    #         count+=1
+    # print(count,avgSum/count)
 
+    is_reachable,dist=no.dijkstra(graph,list(graph.nodes)[0],list(graph.nodes)[-1])
+    count=0
+    for r in is_reachable:
+        if is_reachable[r]==True:
+            count+=1
+    print(count)
+
+
+    node_colors = ["red" if is_reachable[n] else "lightblue" for n in
+                   graph.nodes]
+    node_colors[0]="purple"
+    node_colors[-1]="green"
+    node_sizes = [10 if is_reachable[n] else 0 for n in graph.nodes]
+    node_sizes[0]=40
+    node_sizes[-1]=40
+
+    # Visualize the graph using osmnx functions
+    G = nx.MultiDiGraph(no2nx(graph))
+    G.graph["crs"] = pyproj.CRS("EPSG:4326")
+    fig, ax = ox.plot_graph(G, node_color=node_colors,
+                            bgcolor='white',
+                            node_size=node_sizes,
+                            edge_color='black',
+                            edge_alpha=0.3,
+                            save=True,
+                            filepath="BFS_Traversal_OSMnx.png")

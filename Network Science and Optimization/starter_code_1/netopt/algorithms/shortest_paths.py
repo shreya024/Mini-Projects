@@ -6,18 +6,19 @@ import heapq
 def bellman_ford():
     pass
 
-def dijkstra(graph,source):
+def dijkstra(graph,source,target):
     dist={node: float('inf') for node in graph.nodes}
     dist[source]=0
 
     predecessor={node:-1 for node in graph.nodes}
+    is_reachable = {node: False for node in graph.nodes}
 
     #set S for all nodes whose labels are set
     s=set()
     #set S' for all nodes whose labels are not set
     sbar=set(graph.nodes)
 
-    while sbar:
+    while target in sbar :
         # pick u with lowest dist label
         lowest=float('inf')
         u=-1
@@ -30,16 +31,18 @@ def dijkstra(graph,source):
 
         # add u to S
         s.add(u)
+        is_reachable[u] = True #added to is_reachable
         # remove u from sbar
         sbar.remove(u)
 
         for v in graph.adj[u]:
-            if(dist[u]>dist[v]+graph.adj[u][v]["length"]):
-                    dist[u]=dist[v]+graph.adj[u][v]["length"]
-                    predecessor[u]=v
+            if(dist[v]>dist[u]+graph.adj[u][v]["length"]):
+                    dist[v]=dist[u]+graph.adj[u][v]["length"]
+                    predecessor[v]=u
 
-        return dist
-    pass
+        
+    return is_reachable,dist
+    
 
 def reverse_dijkstra(graph,target):
     dist = {node: float('inf') for node in graph.nodes}
